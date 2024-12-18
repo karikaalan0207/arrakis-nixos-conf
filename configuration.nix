@@ -78,11 +78,16 @@ in
 		xkb.variant = "";
 	};
 	# NVIDIA drivers and CUDA support
+	hardware.graphics.enable = true;
 	hardware.nvidia = {
 		open = false;
 		modesetting.enable = true;
 		package = config.boot.kernelPackages.nvidiaPackages.stable;
 		nvidiaSettings = true;
+		# prime.offload.enable = true;
+		# prime.nvidiaBusId = "PCI:1:0:0";
+		powerManagement.enable = true;
+		# powerManagement.finegrained = true;
 	};
 	services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -148,6 +153,8 @@ in
 		usbutils
 		i2c-tools
 		deepcool-digital-linux
+		toybox
+		pciutils
 		python3Full
 		python3Packages.hidapi
 		python3Packages.psutil
