@@ -4,36 +4,32 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+	imports = [
+		(modulesPath + "/installer/scan/not-detected.nix")
+	];
 
-  boot.initrd.availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+	boot = {
+		initrd = {
+			availableKernelModules = [ "nvme" "ahci" "xhci_pci" "usbhid" "uas" "sd_mod" ];
+			kernelModules = [ ];
+		};
+		kernelModules = [ "kvm-amd" ];
+		extraModulePackages = [ ];
+	};
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8db3fc9f-0c78-4c4c-9073-8c58ec901a75";
-      fsType = "ext4";
-    };
+	fileSystems."/" = {
+		device = "/dev/disk/by-uuid/cea3b5d3-54cb-42d3-8013-7ce726c34758";
+		fsType = "ext4";
+	};
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/96F4-CF13";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+	fileSystems."/boot" = {
+		device = "/dev/disk/by-uuid/9B61-63D8";
+		fsType = "vfat";
+		options = [ "fmask=0077" "dmask=0077" ];
+	};
 
-  swapDevices = [ ];
+	swapDevices = [ ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp11s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp12s0.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+	hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

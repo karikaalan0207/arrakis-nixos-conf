@@ -1,0 +1,6 @@
+wine:
+  esync: true
+  fsync: true
+  dxvk: true
+  vkd3d: true
+  dxvk_nvapi: true

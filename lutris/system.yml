@@ -1,0 +1,9 @@
+system:
+  disable_runtime: true
+  prefer_system_libs: true
+  gamemode: true
+  prefix_command: /run/current-system/sw/bin/gamescope-hdr
+  env:
+    PROTON_ENABLE_NGX_UPDATER: '1'
+    #PROTON_LOG: '1'
+    #PROTON_LOG_DIR: '/tmp/'
