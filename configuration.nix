@@ -228,6 +228,18 @@
 		};
 	};
 
+	# Ollama — local LLM server for the agentic coding workflow (opencode +
+	# Qwen3-Coder). Vulkan build: ollama-cuda fails to build from source on
+	# this nixpkgs pin (ggml-cuda can't find nvcc — malformed CUDAToolkit_ROOT),
+	# and Vulkan on the RTX 4080 Super gets most of CUDA's inference speed.
+	# Listens on localhost:11434. Models are pulled imperatively with
+	# `ollama pull` (stored in /var/lib/ollama), not declared here — and never
+	# preloaded (no loadModels): VRAM is only used while actually coding.
+	services.ollama = {
+		enable = true;
+		package = pkgs.ollama-vulkan;
+	};
+
 	# ── Gaming: Steam / Epic / GOG / standalone Windows games ────────────────
 	programs = {
 		# ssh-agent as a user service — the GitHub key (~/.ssh/id_ed25519)
@@ -332,6 +344,7 @@
 			# Python / data-science base (ML libs live in the venv — see ML section)
 			python3
 			uv                             # fast pip replacement — manages the ML venv
+			pre-commit                     # git hook framework (agentic workflow gate)
 
 			# Kimi "app" launcher — opens kimi.com as its own Chrome app window
 			# (no official Linux build of the Kimi desktop app exists; see the
