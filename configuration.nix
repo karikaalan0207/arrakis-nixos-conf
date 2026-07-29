@@ -345,6 +345,10 @@
 			python3
 			uv                             # fast pip replacement — manages the ML venv
 			pre-commit                     # git hook framework (agentic workflow gate)
+			opencode                       # agentic coding TUI — global config at
+			                               # ~/.config/opencode/opencode.jsonc (plain dotfile,
+			                               # not nix-managed) wires it to the local ollama
+			                               # qwen3-coder-32k; models pulled imperatively
 
 			# Kimi "app" launcher — opens kimi.com as its own Chrome app window
 			# (no official Linux build of the Kimi desktop app exists; see the
