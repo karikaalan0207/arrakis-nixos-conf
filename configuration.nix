@@ -335,6 +335,7 @@
 			chromium                       # also powers the Kimi app-window launcher below
 			google-chrome
 			obsidian
+			discord
 			qbittorrent
 			vlc                            # general playback; for HDR VIDEO use mpv instead —
 			mpv                            # VLC 3.x can't output HDR on Wayland, mpv can (gpu-next)
