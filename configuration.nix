@@ -7,7 +7,7 @@
 { config, pkgs, lib, ... }:
 
 {
-	# ── EDIT THESE ────────────────────────────────────────────────────────────
+	# EDIT THESE
 	networking.hostName = "arrakis";   # must match the name in flake.nix
 	time.timeZone = "Asia/Kolkata";
 	i18n.defaultLocale = "en_US.UTF-8";
@@ -17,7 +17,6 @@
 		extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
 		shell = pkgs.zsh;   # zsh as the login shell (see programs.zsh below)
 	};
-	# ──────────────────────────────────────────────────────────────────────────
 
 	nixpkgs.config.allowUnfree = true;   # NVIDIA driver, Steam, unrar...
 
@@ -33,7 +32,7 @@
 		};
 	};
 
-	# ── Boot & kernel ─────────────────────────────────────────────────────────
+	# Boot & kernel
 	boot = {
 		loader = {
 			systemd-boot.enable = true;
@@ -240,7 +239,7 @@
 		package = pkgs.ollama-vulkan;
 	};
 
-	# ── Gaming: Steam / Epic / GOG / standalone Windows games ────────────────
+	# Gaming: Steam / Epic / GOG / standalone Windows games
 	programs = {
 		# ssh-agent as a user service — the GitHub key (~/.ssh/id_ed25519)
 		# is offered automatically without needing ssh-add each login.
@@ -283,7 +282,7 @@
 		nix-ld.enable = true;        # keeps manylinux binaries happy (see ML section)
 		virt-manager.enable = true;  # GUI for the libvirtd VMs below
 
-		# ── Shell: zsh + oh-my-zsh + powerlevel10k ─────────────────────────────
+		# Shell: zsh + oh-my-zsh + powerlevel10k
 		zsh = {
 			enable = true;
 			enableCompletion = true;           # tab completion
@@ -455,7 +454,7 @@
 		};
 	};
 
-	# ── AI tooling ────────────────────────────────────────────────────────────
+	# AI tooling
 	# Kimi Code CLI (Moonshot's terminal agent) — packaged in pkgs/kimi-code.nix
 	# and installed via systemPackages above; it runs on the system Node, which
 	# sidesteps the dynamic-linker problems the curl-installed prebuilt binary
@@ -471,7 +470,7 @@
 	# Windows/macOS only) — the launcher above (in systemPackages) is the
 	# closest thing: kimi.com as its own Chrome app window.
 
-	# ── ML / data science: CUDA on the 4080 Super ─────────────────────────────
+	# ML / data science: CUDA on the 4080 Super
 	# Two supported paths. (Nixpkgs-native CUDA torch is deliberately excluded:
 	# it means multi-hour source builds and lags upstream releases.)
 	#
@@ -497,7 +496,7 @@
 	#    `--device nvidia.com/gpu=all` — plain `--gpus all` is unreliable with
 	#    current docker + container-toolkit on NixOS)
 
-	# ── Virtualisation: KVM/QEMU for Windows VMs ──────────────────────────────
+	# Virtualisation: KVM/QEMU for Windows VMs
 	virtualisation = {
 		docker = {
 			enable = true;
@@ -515,7 +514,7 @@
 		spiceUSBRedirection.enable = true;
 	};
 
-	# ── OPTIONAL: VFIO GPU passthrough (Windows VM owns the 4080S) ────────────
+	# OPTIONAL: VFIO GPU passthrough (Windows VM owns the 4080S)
 	# The 7950X3D has an iGPU, so the host can run on it while the 4080S is
 	# passed through. To set up: enable IOMMU + SVM in BIOS, get your GPU's IDs
 	# with `lspci -nn` (the video function AND its HDMI-audio function), then
@@ -530,14 +529,14 @@
 	# Pair it with Looking Glass (pkgs.looking-glass-client) for zero-cable
 	# display. Commented out by default so boot is never blocked by a stale ID.
 
-	# ── Networking ────────────────────────────────────────────────────────────
+	# Networking
 	networking = {
 		networkmanager = {
 			enable = true;
 			dns = "none";
 		};
 		useDHCP = false;
-		nameservers = [ "192.168.1.19" ];
+		nameservers = [ "192.168.1.19" "1.1.1.1" ];
 	};
 	# Firewall stays ON by default; the steam options above open what they need.
 
